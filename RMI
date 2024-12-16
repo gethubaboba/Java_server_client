@@ -1,0 +1,7 @@
+package java_server;
+
+import java.rmi.*;
+
+public interface LoginedUsers extends Remote {
+    String[] getLoginedUsers() throws RemoteException;
+}
