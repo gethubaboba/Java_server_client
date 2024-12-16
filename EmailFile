@@ -1,0 +1,54 @@
+package java_server;
+
+import java.io.*;
+
+public class EmailFile implements Serializable {
+    private static final long serialVersionUID = -7323881511346914988L;
+
+    String name;
+    byte[] content;
+
+    public EmailFile(File file) {
+        name = file.getName();
+
+        try {
+            FileInputStream stream = new FileInputStream(file);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while(true){
+                int peremenna = stream.read();
+                if(peremenna == -1){
+                    break;
+                }
+                baos.write(peremenna);
+            }
+            content = baos.toByteArray();
+            stream.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public boolean getFile(File file) {
+        assert file.isDirectory() : "DAUN";
+
+        File current = new File(file, name);
+        try {
+            FileOutputStream stream = new FileOutputStream(current);
+            stream.write(content);
+            stream.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+}
